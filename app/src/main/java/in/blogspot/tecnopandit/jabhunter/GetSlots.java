@@ -34,7 +34,12 @@ public class GetSlots extends Service {
         protected String doInBackground(String... strings) {
             try
             {
-                URL url = new URL("https://cdn-api.co-vin.in/api/v2/appointment/sessions/public/findByPin?pincode=302004&date=30-05-2021");
+                String pin = "302004";
+                String date = "01-06-2021";
+                pin = strings[0];
+                date = strings[1];
+                String urlStr = "https://cdn-api.co-vin.in/api/v2/appointment/sessions/public/findByPin?pincode="+pin+"&date="+date;
+                URL url = new URL(urlStr);
                 HttpsURLConnection conn = (HttpsURLConnection) url.openConnection();
                 conn.connect();
                 if (conn.getResponseCode()==HttpsURLConnection.HTTP_OK){
@@ -69,12 +74,14 @@ public class GetSlots extends Service {
 
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
+        String pin = intent.getStringExtra("PIN");
+        String date = intent.getStringExtra("DATE");
         TimerTask timerTask = new TimerTask() {
             @Override
             public void run() {
                 Log.e("From Service","!!!!!!!!Called!!!!!!!!!");
                 fetchData fd = new fetchData();
-                fd.execute();
+                fd.execute(pin,date);
             }
         };
         Timer t = new Timer();
