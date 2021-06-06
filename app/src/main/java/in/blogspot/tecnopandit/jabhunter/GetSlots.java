@@ -24,6 +24,8 @@ import javax.net.ssl.HttpsURLConnection;
 public class GetSlots extends Service {
     public GetSlots() {
     }
+    Timer t;
+    String cancelTimer = "";
 
     class fetchData extends AsyncTask<String,String,String>{
         public JSONObject jsonObj ;
@@ -76,16 +78,20 @@ public class GetSlots extends Service {
     public int onStartCommand(Intent intent, int flags, int startId) {
         String pin = intent.getStringExtra("PIN");
         String date = intent.getStringExtra("DATE");
+        cancelTimer = intent.getStringExtra("cancelTimer");
         TimerTask timerTask = new TimerTask() {
             @Override
             public void run() {
                 Log.e("From Service","!!!!!!!!Called!!!!!!!!!");
                 fetchData fd = new fetchData();
                 fd.execute(pin,date);
+
             }
         };
-        Timer t = new Timer();
+        t = new Timer();
+
         t.scheduleAtFixedRate(timerTask,0,2000);
+
         return START_STICKY;
     }
 
@@ -98,5 +104,15 @@ public class GetSlots extends Service {
     @Override
     public void onCreate() {
         super.onCreate();
+    }
+
+    @Override
+    public void onDestroy() {
+        Log.e("CALLED FROM ONDESTROY","::: OUTSIDE IF::::");
+        if(cancelTimer=="true"){
+            Log.e("CALLED FROM ONDESTROY","::: INSIDE IF:::: TRUE");
+            this.stopSelf();
+        }
+        super.onDestroy();
     }
 }

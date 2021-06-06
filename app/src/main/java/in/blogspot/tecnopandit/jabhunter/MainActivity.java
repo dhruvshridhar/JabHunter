@@ -20,12 +20,17 @@ import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Locale;
 
 public class MainActivity extends AppCompatActivity {
 String result = "";
+JSONObject resJson;
 int count = 0;
 final Calendar calendar = Calendar.getInstance();
 EditText dateET, pinEt;
@@ -69,6 +74,7 @@ DatePickerDialog.OnDateSetListener date = new DatePickerDialog.OnDateSetListener
                 if(!(dateET.getText().toString().isEmpty() &&pinEt.getText().toString().isEmpty())){
                     ser.putExtra("PIN",pinEt.getText().toString());
                     ser.putExtra("DATE",dateET.getText().toString());
+                    ser.putExtra("cancelTimer","false");
                     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
                         startForegroundService(ser);
                     } else {
@@ -85,8 +91,11 @@ DatePickerDialog.OnDateSetListener date = new DatePickerDialog.OnDateSetListener
         stopBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                ser.putExtra("cancelTimer","true");
                 stopService(ser);
+                Toast.makeText(getApplicationContext(),"Cancelling!",Toast.LENGTH_LONG).show();
             }
+
         });
 
     }
@@ -95,6 +104,13 @@ DatePickerDialog.OnDateSetListener date = new DatePickerDialog.OnDateSetListener
         @Override
         public void onReceive(Context context, Intent intent) {
             result = intent.getExtras().get("vaccineData").toString();
+            try {
+                resJson = new JSONObject(result);
+                parseJson(resJson);
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+
             Log.e("FROM ACTIVITY::::::", result);
             if(count<1) {
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
@@ -127,5 +143,17 @@ DatePickerDialog.OnDateSetListener date = new DatePickerDialog.OnDateSetListener
     protected void onPause() {
         super.onPause();
         unregisterReceiver(br);
+    }
+
+    public String parseJson(JSONObject j) throws JSONException {
+        JSONArray ary = j.getJSONArray("sessions");
+        for(int i = 0; i<ary.length();i++){
+            JSONObject temp=ary.getJSONObject(i);
+            if(temp.getInt("available_capacity")!=0){
+                
+            }
+            temp.getString("name");
+        }
+        return "";
     }
 }
