@@ -25,6 +25,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Locale;
 
@@ -34,7 +35,7 @@ JSONObject resJson;
 int count = 0;
 final Calendar calendar = Calendar.getInstance();
 EditText dateET, pinEt;
-Button searchBtn, stopBtn;
+Button searchBtn, stopBtn, showSlots;
 
 DatePickerDialog.OnDateSetListener date = new DatePickerDialog.OnDateSetListener() {
     @Override
@@ -60,6 +61,7 @@ DatePickerDialog.OnDateSetListener date = new DatePickerDialog.OnDateSetListener
         searchBtn=findViewById(R.id.searchBtn);
         stopBtn=findViewById(R.id.stopBtn);
         pinEt=findViewById(R.id.editTextNumber);
+        showSlots=findViewById(R.id.slotsBtn);
         Intent ser = new Intent(this,GetSlots.class);
         dateET.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -98,35 +100,54 @@ DatePickerDialog.OnDateSetListener date = new DatePickerDialog.OnDateSetListener
 
         });
 
+        showSlots.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent i = new Intent(getApplicationContext(),SlotViewer.class);
+                i.putExtra("data",result);
+                startActivity(i);
+            }
+        });
+
     }
 
     BroadcastReceiver br = new BroadcastReceiver() {
         @Override
         public void onReceive(Context context, Intent intent) {
             result = intent.getExtras().get("vaccineData").toString();
+            ArrayList<JSONObject> activeVac = new ArrayList<>();
             try {
                 resJson = new JSONObject(result);
-                parseJson(resJson);
+                activeVac=parseJson(resJson);
             } catch (JSONException e) {
                 e.printStackTrace();
             }
 
             Log.e("FROM ACTIVITY::::::", result);
-            if(count<1) {
-                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-                    NotificationChannel notificationChannel = new NotificationChannel("123", "vacChannel", NotificationManager.IMPORTANCE_HIGH);
-                    notificationChannel.setDescription("Vaccine Channel");
-                    NotificationManager notificationManager = getSystemService(NotificationManager.class);
-                    notificationManager.createNotificationChannel(notificationChannel);
+            if(activeVac.size()!=0) {
+                for(int i=0;i<activeVac.size();i++){
+                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                        NotificationChannel notificationChannel = new NotificationChannel("123", "vacChannel", NotificationManager.IMPORTANCE_HIGH);
+                        notificationChannel.setDescription("Vaccine Channel");
+                        NotificationManager notificationManager = getSystemService(NotificationManager.class);
+                        notificationManager.createNotificationChannel(notificationChannel);
+                    }
+                    NotificationCompat.Builder builder = null;
+                    try {
+                        builder = new NotificationCompat.Builder(getApplicationContext(), "123")
+                                .setContentTitle(activeVac.get(i).getString("vaccine")+" Vaccine Slots Found!!")
+                                .setSmallIcon(R.drawable.vaccinenoti)
+                                .setContentText("Slots available at location "+activeVac.get(i).getString("name"))
+                                .setContentInfo("Address: "+activeVac.get(i).getString("address")+", "+activeVac.get(i).getString("district_name")+", "+activeVac.get(i).getString("block_name"))
+                                .setPriority(NotificationCompat.PRIORITY_HIGH);
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+                    NotificationManagerCompat notificationManagerCompat = NotificationManagerCompat.from(getApplicationContext());
+                    notificationManagerCompat.notify(123, builder.build());
                 }
-                NotificationCompat.Builder builder = new NotificationCompat.Builder(getApplicationContext(), "123")
-                        .setContentTitle("Vaccine Slot Found")
-                        .setSmallIcon(R.drawable.vaccinenoti)
-                        .setContentText("Slots available at location XYZ")
-                        .setPriority(NotificationCompat.PRIORITY_HIGH);
-                NotificationManagerCompat notificationManagerCompat = NotificationManagerCompat.from(getApplicationContext());
-                notificationManagerCompat.notify(123, builder.build());
-            }
+                }
+
             count++;
         }
 
@@ -145,15 +166,16 @@ DatePickerDialog.OnDateSetListener date = new DatePickerDialog.OnDateSetListener
         unregisterReceiver(br);
     }
 
-    public String parseJson(JSONObject j) throws JSONException {
+    public ArrayList<JSONObject> parseJson(JSONObject j) throws JSONException {
+        ArrayList<JSONObject> resultAry = new ArrayList<>();
         JSONArray ary = j.getJSONArray("sessions");
         for(int i = 0; i<ary.length();i++){
             JSONObject temp=ary.getJSONObject(i);
             if(temp.getInt("available_capacity")!=0){
-                
+                count=1;
+                resultAry.add(temp);
             }
-            temp.getString("name");
         }
-        return "";
+        return resultAry;
     }
 }

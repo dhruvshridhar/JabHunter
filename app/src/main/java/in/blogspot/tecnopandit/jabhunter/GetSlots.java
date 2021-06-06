@@ -54,6 +54,7 @@ public class GetSlots extends Service {
                         stringBuilder.append(temp);
                     }
                     result = stringBuilder.toString();
+//                    result=sampleData;
                     jsonObj = new JSONObject(result);
                     sessionAry = jsonObj.getJSONArray("sessions");
 //                Log.e("DATA::::::",sessionAry.toString());
@@ -115,4 +116,177 @@ public class GetSlots extends Service {
         }
         super.onDestroy();
     }
+
+    String sampleData = "{\n" +
+            "  \"sessions\": [\n" +
+            "    {\n" +
+            "      \"center_id\": 706648,\n" +
+            "      \"name\": \"18-44 SONI HOSPITAL WP\",\n" +
+            "      \"address\": \"SONI HOSPITAL\",\n" +
+            "      \"state_name\": \"Rajasthan\",\n" +
+            "      \"district_name\": \"Jaipur I\",\n" +
+            "      \"block_name\": \"Jaipur I Urban\",\n" +
+            "      \"pincode\": 302004,\n" +
+            "      \"from\": \"09:00:00\",\n" +
+            "      \"to\": \"17:00:00\",\n" +
+            "      \"lat\": 26,\n" +
+            "      \"long\": 75,\n" +
+            "      \"fee_type\": \"Paid\",\n" +
+            "      \"session_id\": \"baac7763-fff7-4a03-af70-3e8c0fb99224\",\n" +
+            "      \"date\": \"06-06-2021\",\n" +
+            "      \"available_capacity_dose1\": 0,\n" +
+            "      \"available_capacity_dose2\": 0,\n" +
+            "      \"available_capacity\": 0,\n" +
+            "      \"fee\": \"0\",\n" +
+            "      \"min_age_limit\": 18,\n" +
+            "      \"vaccine\": \"COVAXIN\",\n" +
+            "      \"slots\": [\n" +
+            "        \"09:00AM-11:00AM\",\n" +
+            "        \"11:00AM-01:00PM\",\n" +
+            "        \"01:00PM-03:00PM\",\n" +
+            "        \"03:00PM-05:00PM\"\n" +
+            "      ]\n" +
+            "    },\n" +
+            "    {\n" +
+            "      \"center_id\": 603488,\n" +
+            "      \"name\": \"ISOLATION SMS HOSPITAL (IDH)\",\n" +
+            "      \"address\": \"SMS HOSPITAL JAIPUR\",\n" +
+            "      \"state_name\": \"Rajasthan\",\n" +
+            "      \"district_name\": \"Jaipur I\",\n" +
+            "      \"block_name\": \"Jaipur I Urban\",\n" +
+            "      \"pincode\": 302004,\n" +
+            "      \"from\": \"09:00:00\",\n" +
+            "      \"to\": \"17:00:00\",\n" +
+            "      \"lat\": 26,\n" +
+            "      \"long\": 75,\n" +
+            "      \"fee_type\": \"Free\",\n" +
+            "      \"session_id\": \"6e0947f9-424c-4325-9326-aba9829b6315\",\n" +
+            "      \"date\": \"06-06-2021\",\n" +
+            "      \"available_capacity_dose1\": 0,\n" +
+            "      \"available_capacity_dose2\": 0,\n" +
+            "      \"available_capacity\": 26,\n" +
+            "      \"fee\": \"0\",\n" +
+            "      \"min_age_limit\": 45,\n" +
+            "      \"vaccine\": \"COVISHIELD\",\n" +
+            "      \"slots\": [\n" +
+            "        \"09:00AM-11:00AM\",\n" +
+            "        \"11:00AM-01:00PM\",\n" +
+            "        \"01:00PM-03:00PM\",\n" +
+            "        \"03:00PM-05:00PM\"\n" +
+            "      ]\n" +
+            "    },\n" +
+            "    {\n" +
+            "      \"center_id\": 423259,\n" +
+            "      \"name\": \"UPHC Motikatla MHA\",\n" +
+            "      \"address\": \"DHP Motikatla\",\n" +
+            "      \"state_name\": \"Rajasthan\",\n" +
+            "      \"district_name\": \"Jaipur I\",\n" +
+            "      \"block_name\": \"Jaipur I Urban\",\n" +
+            "      \"pincode\": 302004,\n" +
+            "      \"from\": \"09:00:00\",\n" +
+            "      \"to\": \"17:00:00\",\n" +
+            "      \"lat\": 26,\n" +
+            "      \"long\": 75,\n" +
+            "      \"fee_type\": \"Free\",\n" +
+            "      \"session_id\": \"aeeddc0d-bdb1-479b-996a-e88de725c388\",\n" +
+            "      \"date\": \"06-06-2021\",\n" +
+            "      \"available_capacity_dose1\": 0,\n" +
+            "      \"available_capacity_dose2\": 0,\n" +
+            "      \"available_capacity\": 0,\n" +
+            "      \"fee\": \"0\",\n" +
+            "      \"min_age_limit\": 45,\n" +
+            "      \"vaccine\": \"COVISHIELD\",\n" +
+            "      \"slots\": [\n" +
+            "        \"09:00AM-11:00AM\",\n" +
+            "        \"11:00AM-01:00PM\",\n" +
+            "        \"01:00PM-03:00PM\",\n" +
+            "        \"03:00PM-05:00PM\"\n" +
+            "      ]\n" +
+            "    },\n" +
+            "    {\n" +
+            "      \"center_id\": 707325,\n" +
+            "      \"name\": \"18-44 DENTAL HOSPITAL WP\",\n" +
+            "      \"address\": \"DANTEL HOSPITAL\",\n" +
+            "      \"state_name\": \"Rajasthan\",\n" +
+            "      \"district_name\": \"Jaipur I\",\n" +
+            "      \"block_name\": \"Jaipur I Urban\",\n" +
+            "      \"pincode\": 302004,\n" +
+            "      \"from\": \"09:00:00\",\n" +
+            "      \"to\": \"17:00:00\",\n" +
+            "      \"lat\": 26,\n" +
+            "      \"long\": 75,\n" +
+            "      \"fee_type\": \"Free\",\n" +
+            "      \"session_id\": \"0c962750-36d3-4494-94e8-153228061d12\",\n" +
+            "      \"date\": \"06-06-2021\",\n" +
+            "      \"available_capacity_dose1\": 0,\n" +
+            "      \"available_capacity_dose2\": 0,\n" +
+            "      \"available_capacity\": 33,\n" +
+            "      \"fee\": \"0\",\n" +
+            "      \"min_age_limit\": 45,\n" +
+            "      \"vaccine\": \"COVISHIELD\",\n" +
+            "      \"slots\": [\n" +
+            "        \"09:00AM-11:00AM\",\n" +
+            "        \"11:00AM-01:00PM\",\n" +
+            "        \"01:00PM-03:00PM\",\n" +
+            "        \"03:00PM-05:00PM\"\n" +
+            "      ]\n" +
+            "    },\n" +
+            "    {\n" +
+            "      \"center_id\": 584300,\n" +
+            "      \"name\": \"ADARASH NAGAR\",\n" +
+            "      \"address\": \"ADARASH NAGAR 1\",\n" +
+            "      \"state_name\": \"Rajasthan\",\n" +
+            "      \"district_name\": \"Jaipur I\",\n" +
+            "      \"block_name\": \"Jaipur I Urban\",\n" +
+            "      \"pincode\": 302004,\n" +
+            "      \"from\": \"09:00:00\",\n" +
+            "      \"to\": \"17:00:00\",\n" +
+            "      \"lat\": 26,\n" +
+            "      \"long\": 75,\n" +
+            "      \"fee_type\": \"Free\",\n" +
+            "      \"session_id\": \"8241da0f-a268-4aca-a4a1-98f59ffdebd9\",\n" +
+            "      \"date\": \"06-06-2021\",\n" +
+            "      \"available_capacity_dose1\": 0,\n" +
+            "      \"available_capacity_dose2\": 0,\n" +
+            "      \"available_capacity\": 0,\n" +
+            "      \"fee\": \"0\",\n" +
+            "      \"min_age_limit\": 45,\n" +
+            "      \"vaccine\": \"COVISHIELD\",\n" +
+            "      \"slots\": [\n" +
+            "        \"09:00AM-11:00AM\",\n" +
+            "        \"11:00AM-01:00PM\",\n" +
+            "        \"01:00PM-03:00PM\",\n" +
+            "        \"03:00PM-05:00PM\"\n" +
+            "      ]\n" +
+            "    },\n" +
+            "    {\n" +
+            "      \"center_id\": 706648,\n" +
+            "      \"name\": \"18-44 SONI HOSPITAL WP\",\n" +
+            "      \"address\": \"SONI HOSPITAL\",\n" +
+            "      \"state_name\": \"Rajasthan\",\n" +
+            "      \"district_name\": \"Jaipur I\",\n" +
+            "      \"block_name\": \"Jaipur I Urban\",\n" +
+            "      \"pincode\": 302004,\n" +
+            "      \"from\": \"09:00:00\",\n" +
+            "      \"to\": \"17:00:00\",\n" +
+            "      \"lat\": 26,\n" +
+            "      \"long\": 75,\n" +
+            "      \"fee_type\": \"Paid\",\n" +
+            "      \"session_id\": \"140469b7-102b-4718-b8a7-48d5afbe239b\",\n" +
+            "      \"date\": \"06-06-2021\",\n" +
+            "      \"available_capacity_dose1\": 0,\n" +
+            "      \"available_capacity_dose2\": 0,\n" +
+            "      \"available_capacity\": 2,\n" +
+            "      \"fee\": \"0\",\n" +
+            "      \"min_age_limit\": 45,\n" +
+            "      \"vaccine\": \"COVAXIN\",\n" +
+            "      \"slots\": [\n" +
+            "        \"09:00AM-11:00AM\",\n" +
+            "        \"11:00AM-01:00PM\",\n" +
+            "        \"01:00PM-03:00PM\",\n" +
+            "        \"03:00PM-05:00PM\"\n" +
+            "      ]\n" +
+            "    }\n" +
+            "  ]\n" +
+            "}";
 }
